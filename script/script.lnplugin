@@ -1,0 +1,2 @@
+### 每天 9 点GlaDOS签到 ###
+cron "0 9 * * *" script-path=https://gist.githubusercontent.com/1imoonlight/389197f724239fb46f897f2544de3651/raw/glados_checkin.js,timeout=30,tag=GLaDOS_每日签到

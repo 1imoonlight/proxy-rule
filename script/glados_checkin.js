@@ -3,7 +3,7 @@
  * @desc        GLaDOS签到
  */
 
-;(async () => {
+(async () => {
   const url = "https://glados.rocks/api/user/checkin";
   const method = "POST";
   const headers = {
