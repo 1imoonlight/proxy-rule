@@ -1,2 +1,4 @@
-### 每天 9 点GlaDOS签到 ###
+/**
+ * 每天 9 点进行 GlaDOS 签到
+ */
 cron "0 9 * * *" script-path=https://cdn.jsdelivr.net/gh/1imoonlight/proxy-rule/script/glados_checkin.js,timeout=30,tag=GLaDOS_每日签到
