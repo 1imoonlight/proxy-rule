@@ -84,7 +84,8 @@ async function main() {
     const streak = d.streak != null ? `连签 ${d.streak} 天` : "";
     const days = await leftDays(ctx);
     const detail = [d.message, balance, streak, days !== null && `剩余 ${days} 天`].filter(Boolean).join(" · ");
-    $notification.post(TITLE, d.code === 0 ? "签到成功" : "签到未成功", detail);
+    const subtitle = d.code === 0 ? "签到成功" : d.code === 1 ? "今日已签到" : "签到未成功";
+    $notification.post(TITLE, subtitle, detail);
   }
 }
 
