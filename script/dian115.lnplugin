@@ -1,0 +1,11 @@
+#!name = MADOW 每日签到
+#!desc = m.dian115.com 每日 9 点普通签到。首次使用：开启插件后用 Safari 打开 m.dian115.com 登录一次，自动抓取 Cookie
+#!homepage = https://m.dian115.com
+#!icon = https://m.dian115.com/newlogo.png
+
+[Script]
+http-request ^https:\/\/m\.dian115\.com\/api\/portal\/(me|signin)([\/?]|$) script-path=https://raw.githubusercontent.com/1imoonlight/proxy-rule/refs/heads/main/script/dian115_cookie.js, requires-body=false, timeout=10, tag=MADOW_Cookie抓取
+cron "0 9 * * *" script-path=https://raw.githubusercontent.com/1imoonlight/proxy-rule/refs/heads/main/script/dian115_checkin.js, timeout=60, tag=MADOW_每日签到
+
+[MITM]
+hostname = m.dian115.com
