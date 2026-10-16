@@ -1,0 +1,10 @@
+#!name = NodeSeek 每日签到
+#!desc = 每天 9 点签到 NodeSeek（随机鸡腿）。首次使用：开启插件后用 Safari 登录 www.nodeseek.com 并停留 1 分钟以上，收到"Cookie 抓取成功"通知即可
+#!homepage = https://www.nodeseek.com
+
+[Script]
+http-request ^https:\/\/www\.nodeseek\.com\/(api|edge-cgi)\/ script-path=https://raw.githubusercontent.com/1imoonlight/proxy-rule/refs/heads/main/script/nodeseek_cookie.js, requires-body=false, timeout=10, tag=NodeSeek_Cookie抓取
+cron "0 9 * * *" script-path=https://raw.githubusercontent.com/1imoonlight/proxy-rule/refs/heads/main/script/nodeseek_checkin.js, timeout=60, tag=NodeSeek_每日签到
+
+[MITM]
+hostname = www.nodeseek.com
