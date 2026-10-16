@@ -24,7 +24,8 @@ function request(ctx, method, path, payload) {
     Origin: HOST,
     Referer: HOST + "/console/checkin",
   };
-  const opts = { url: HOST + "/api" + path, headers, timeout: 15000, "auto-cookie": false };
+  // 单次 10s：签到 + 查剩余天数最坏 20s，留在插件 cron 的 30s 超时内
+  const opts = { url: HOST + "/api" + path, headers, timeout: 10000, "auto-cookie": false };
   if (payload !== undefined) {
     headers["Content-Type"] = "application/json;charset=UTF-8";
     opts.body = JSON.stringify(payload);

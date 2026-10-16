@@ -352,7 +352,8 @@ function signHeaders(ctx, method, path) {
 function request(ctx, method, path, payload, signed) {
   const headers = baseHeaders(ctx, method);
   if (signed && ctx.signing) Object.assign(headers, signHeaders(ctx, method, "/api/portal" + path));
-  const opts = { url: API + path, headers, timeout: 15000, "auto-cookie": false };
+  // 单次 10s：重建会话重试时最多 6 个请求，最坏 60s，插件 cron 超时设为 90s 留余量
+  const opts = { url: API + path, headers, timeout: 10000, "auto-cookie": false };
   if (payload !== undefined) opts.body = JSON.stringify(payload);
   return new Promise((resolve) => {
     $httpClient[method.toLowerCase()](opts, (error, response, data) => {
@@ -412,7 +413,8 @@ async function signin(ctx) {
 function report(ctx, res) {
   const d = res.json || {};
   const code = d.code || "";
-  if (res.status === 200 && (code === "" || code === "ok")) {
+  // 必须是 JSON：HTML 回退页也可能是 200，不能当成功，更不能拿它覆盖已存的 Cookie
+  if (res.json && res.status === 200 && (code === "" || code === "ok")) {
     $persistentStore.write(serializeCookies(ctx.jar, true), STORE_COOKIE);
     const award = Number(d.award);
     const gain = !Number.isFinite(award) ? "签到成功" : award > 0 ? `+${award} 积分` : award === 0 ? "本次空签" : `${award} 积分`;
